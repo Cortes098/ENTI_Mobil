@@ -8,17 +8,39 @@
 import SwiftUI
 
 struct fourDotRow: View {
+    
+    
+    
+    var width: CGFloat = 20
+    var height: CGFloat = 20
     var body: some View {
-        
-        VStack
-        {
-            HStack
+    ZStack{
+            Rectangle()
+                .fill(Color.gray)
+                .frame(width: 60, height: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+            VStack
             {
-                Circle()
-                
-            }
+                HStack
+                {
+                    Circle()
+                        .fill(Color.black)
+                        .frame(width: self.width, height: self.height,  alignment: .center)
+                    Circle()                        
+                        .fill(Color.black)
+                        .frame(width: self.width, height: self.height)
+                }
             
+                HStack
+                {
+                    Circle()
+                        .fill(Color.black)
+                        .frame(width: self.width, height: self.height)
+                    Circle()
+                        .fill(Color.black)
+                        .frame(width: self.width, height: self.height)
+                }
         }
+    }
         
         
        

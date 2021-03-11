@@ -8,18 +8,12 @@
 import SwiftUI
 
 
-//MODEL
+
 
 
 struct ContentView: View {
     
-    var RowList: [row] = [
-        row(number :1, content: "r1"),
-        row(number :2, content: "r2"),
-        row(number :3, content: "r3"),
-        row(number :4, content: "r4"),
-        row(number :5, content: "r5"),
-    ]
+    @ObservedObject var viewModel = MasterMindViewModel()
     
     var body: some View
     {
@@ -31,11 +25,7 @@ struct ContentView: View {
                 
                 VStack
                 {
-                    ForEach(RowList, id: \.number){ row in
-                        Text("\(row.number) - \(row.content)").font(.title3)
-                            .padding()
-                            .background(Color.gray)
-                    }
+                    
                 }
                 
                 HStack
