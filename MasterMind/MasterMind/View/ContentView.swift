@@ -17,6 +17,7 @@ struct ContentView: View {
     
     var body: some View
     {
+        
             VStack
             {
                 Text("MasterMind")
@@ -25,7 +26,11 @@ struct ContentView: View {
                 
                 VStack
                 {
+                    let rawColors=self.viewModel.enumToColor()
+                    RowView(test: rawColors)
+                    Buttons(label: " ", action: self.viewModel.pressRed)
                     
+                    //viewModel.allRows.first
                 }
                 
                 HStack

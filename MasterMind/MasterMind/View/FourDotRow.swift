@@ -7,9 +7,7 @@
 
 import SwiftUI
 
-struct fourDotRow: View {
-    
-    
+struct FourDotRow: View {
     
     var width: CGFloat = 20
     var height: CGFloat = 20
@@ -39,18 +37,13 @@ struct fourDotRow: View {
                         .fill(Color.black)
                         .frame(width: self.width, height: self.height)
                 }
+            }
         }
-    }
-        
-        
-       
-        
-        
     }
 }
 
 struct fourDotRow_Previews: PreviewProvider {
     static var previews: some View {
-        fourDotRow()
+        FourDotRow()
     }
 }

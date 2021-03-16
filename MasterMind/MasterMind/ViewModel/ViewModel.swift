@@ -23,41 +23,57 @@ public enum answerColor
     case RED
 }
 
-enum dotColors
+enum dotColors: Int
 {
-    case EMPTY
-    case WHITE
-    case RED
-    case BLACK
-    case GREEN
-    case PINK
-    case YELLOW
+    case EMPTY = 0
+    case YELLOW = 1
+    case RED = 2
+    case BLACK = 3
+    case GREEN = 4
 }
 
-struct Row
-{
-    var color: [dotColors]
-}
+
 
 
 class MasterMindViewModel : ObservableObject
 {
-    var rowIndex: Int = 0
-    var columnIndex: Int = 0
+    @Published var testRow : [dotColors] = [.EMPTY, .EMPTY, .EMPTY, .EMPTY]
     
-    var allRows: [Row] =
-        [
-            Row(color: [.EMPTY, .EMPTY, .EMPTY, .EMPTY] ),
-            Row(color: [.EMPTY, .EMPTY, .EMPTY, .EMPTY] ),
-            Row(color: [.EMPTY, .EMPTY, .EMPTY, .EMPTY] ),
-            Row(color: [.EMPTY, .EMPTY, .EMPTY, .EMPTY] ),
-        ]
+    var solveSolution: [dotColors] = [dotColors(rawValue: Int.random(in: (1...4)))!,
+                                      dotColors(rawValue: Int.random(in: (1...4)))! ,
+                                      dotColors(rawValue: Int.random(in: (1...4)))!,
+                                      dotColors(rawValue: Int.random(in: (1...4)))!]
     
-    func test() {
-        allRows[rowIndex].color[columnIndex] = .GREEN
-        
+    
+    public func pressRed()
+    {
+        testRow[0] = .RED
         
     }
+    
+    public func enumToColor() -> [Color]
+    {
+        var colorArray = Array<Color>()
+        
+        for color in testRow
+        {
+            switch color
+            {
+            case .BLACK:
+                colorArray.append(Color.black)
+            case .GREEN:
+                colorArray.append(Color.green)
+            case .RED:
+                colorArray.append(Color.red)
+            case .YELLOW:
+                colorArray.append(Color.yellow)
+            case .EMPTY:
+                colorArray.append(Color.gray)
+            }
+        }
+        return colorArray
+    }
+    
     
     
 }
