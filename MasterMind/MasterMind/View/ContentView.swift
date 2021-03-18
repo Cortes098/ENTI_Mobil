@@ -26,23 +26,48 @@ struct ContentView: View {
                 
                 VStack
                 {
-                    let rawColors=self.viewModel.enumToColor()
+                    let rawColors = viewModel.testRow.toColors()
                     RowView(test: rawColors)
-                    Buttons(label: " ", action: self.viewModel.pressRed)
-                    
-                    //viewModel.allRows.first
+                    HStack
+                    {
+                        Spacer()
+                        Buttons(label: " ", colorBackground:dotColors.toColor(.BLACK)())
+                        {
+                            self.viewModel.eraseColor()
+                            
+                        }
+                        
+                        
+                        Buttons(label: " ", colorBackground: dotColors.toColor(.YELLOW)())
+                        {
+                            self.viewModel.colorButtonPressed(color: 1)
+                        }
+                        Buttons(label: " ", colorBackground: dotColors.toColor(.RED)())
+                        {
+                            self.viewModel.colorButtonPressed(color: 2)
+                        }
+                        Buttons(label: " ", colorBackground: dotColors.toColor(.BLACK)())
+                        {
+                            self.viewModel.colorButtonPressed(color: 3)
+                        }
+                        Buttons(label: " ", colorBackground: dotColors.toColor(.GREEN)())
+                        {
+                            self.viewModel.colorButtonPressed(color: 4)
+                        }
+                        Spacer()
+                    }
                 }
                 
-                HStack
-                {
-                    
-                }
                 
                 Text("Tried 2 times")
                     .font(.title2)
                     .padding()
+                Spacer()
             }
+            
+            .background(Color.white)
     }
+    
 }
 
 struct ContentView_Previews: PreviewProvider {
