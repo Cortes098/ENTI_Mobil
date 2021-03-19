@@ -11,30 +11,32 @@ struct FourDotRow: View {
     
     var width: CGFloat = 20
     var height: CGFloat = 20
+    
+    var colorsArray: [Color]
+    
     var body: some View {
     ZStack{
             Rectangle()
-                .fill(Color.gray)
+                .fill(Color.white)
                 .frame(width: 60, height: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
             VStack
             {
                 HStack
                 {
                     Circle()
-                        .fill(Color.black)
+                        .fill(colorsArray[0])
                         .frame(width: self.width, height: self.height,  alignment: .center)
                     Circle()                        
-                        .fill(Color.black)
+                        .fill(colorsArray[1])
                         .frame(width: self.width, height: self.height)
                 }
-            
                 HStack
                 {
                     Circle()
-                        .fill(Color.black)
+                        .fill(colorsArray[2])
                         .frame(width: self.width, height: self.height)
                     Circle()
-                        .fill(Color.black)
+                        .fill(colorsArray[3])
                         .frame(width: self.width, height: self.height)
                 }
             }
@@ -44,6 +46,6 @@ struct FourDotRow: View {
 
 struct fourDotRow_Previews: PreviewProvider {
     static var previews: some View {
-        FourDotRow()
+        FourDotRow(colorsArray: [.black, .black, .black, .black])
     }
 }

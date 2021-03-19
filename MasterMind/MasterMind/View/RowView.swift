@@ -33,8 +33,7 @@ struct RowView: View {
                 .frame(width: self.width, height: self.height,  alignment: .center)
             Circle()
                 .fill(test[3])
-                .frame(width: self.width, height: self.height,  alignment: .center)
-            
+                .frame(width: self.width, height: self.height,  alignment: .center)            
         }
     }
 }

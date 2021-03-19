@@ -5,16 +5,8 @@
 //  Created by Alumne on 9/3/21.
 //
 
-// LOGICAAAAAAAAAAA
-// LOGICAAAAAAAAAAA
-// LOGICAAAAAAAAAAA
-// LOGICAAAAAAAAAAA
-
-
 import Foundation
 import SwiftUI
-
-
 
 public enum answerColor
 {
@@ -26,90 +18,116 @@ public enum answerColor
 public enum dotColors: Int, CaseIterable
 {
     case EMPTY = 0
-    case YELLOW = 1
-    case RED = 2
-    case BLACK = 3
-    case GREEN = 4
-    case PINK = 5
+    case RED = 1
+    case BLUE = 2
+    case YELLOW = 3
+    case ORANGE = 4
+    case PURPLE = 5
+    case GREEN = 6    
     
     public func toColor() -> Color
     {        
         switch self {
         case .EMPTY:
             return .gray
-        case .YELLOW:
-            return .yellow
         case .RED:
             return .red
-        case .BLACK:
-            return .black
+        case .BLUE:
+            return .blue
+        case .YELLOW:
+            return .yellow
+        case .ORANGE:
+            return .orange
+        case .PURPLE:
+            return .purple
         case .GREEN:
             return .green
-        case .PINK:
-            return .pink
         }
     }
     
     public static func allColors()->[Color]
     {
-        return [
+        return[
             dotColors.EMPTY.toColor(),
-            dotColors.YELLOW.toColor(),
             dotColors.RED.toColor(),
-            dotColors.BLACK.toColor(),
-            dotColors.GREEN.toColor(),
-            dotColors.PINK.toColor()
+            dotColors.BLUE.toColor(),
+            dotColors.YELLOW.toColor(),
+            dotColors.ORANGE.toColor(),
+            dotColors.PURPLE.toColor(),
+            dotColors.GREEN.toColor()
         ]
     }
-
 }
-
-
-
 
 class MasterMindViewModel : ObservableObject
 {
-    @Published var testRow : [dotColors] = [.EMPTY, .EMPTY, .EMPTY, .EMPTY]
+    
+    
+    @Published var testRow : [[dotColors]] = [
+        [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
+        [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
+        [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
+        [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
+        [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
+        [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
+        [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
+        [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
+        [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
+        [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
+        [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
+        [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
+                                             ]
+    @Published var dotSolution : [dotColors] = [.EMPTY, .EMPTY, .EMPTY, .EMPTY]
     
     var rowIndex: Int = 0
+    var columnIndex: Int = 0
     
-    var solveSolution: [dotColors] = [dotColors(rawValue: Int.random(in: (1...4)))!,
-                                      dotColors(rawValue: Int.random(in: (1...4)))! ,
-                                      dotColors(rawValue: Int.random(in: (1...4)))!,
-                                      dotColors(rawValue: Int.random(in: (1...4)))!]
-    
-    
+    var solveSolution: [dotColors] = [dotColors(rawValue: Int.random(in: (2...5)))!,
+                                      dotColors(rawValue: Int.random(in: (2...5)))!,
+                                      dotColors(rawValue: Int.random(in: (2...5)))!,
+                                      dotColors(rawValue: Int.random(in: (2...5)))!]
     
     public func colorButtonPressed(color: Int)
     {
-        guard rowIndex>3 else {
-            testRow[rowIndex] = dotColors(rawValue: color)!
-            rowIndex=rowIndex+1
+        guard columnIndex>3 else {
+            testRow[rowIndex][columnIndex] = dotColors(rawValue: color)!
+            columnIndex=columnIndex+1
             return
         }
-        
     }
+    
     public func eraseColor()
     {
-        guard rowIndex<=0 else {
-            rowIndex=rowIndex-1
-            testRow[rowIndex] = dotColors(rawValue: 0)!
+        guard columnIndex<=0 else {
+            columnIndex=columnIndex-1
+            testRow[rowIndex][columnIndex] = dotColors(rawValue: 0)!
             return
         }
+    }
+    
+    public func checkCombination()
+    {
+        var checkedN = [Int]()
+        
+        for (i, _) in testRow[rowIndex].enumerated() {
+            if testRow[rowIndex][i].rawValue == solveSolution[i].rawValue
+            {
+                dotSolution[i] = .RED
+                checkedN.append(i)
+            }
+        }
+        rowIndex=rowIndex+1
+        columnIndex=0
+        
+        
         
         
         
     }
-    
-    
-    
-    
-    
 }
 
 
-extension Array where Element == dotColors {
-    
+extension Array where Element == dotColors {    
     func toColors() -> [Color] {
         return self.map { $0.toColor() }
     }
