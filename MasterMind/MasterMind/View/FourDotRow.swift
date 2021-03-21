@@ -12,13 +12,10 @@ struct FourDotRow: View {
     var width: CGFloat = 20
     var height: CGFloat = 20
     
-    var colorsArray: [Color]
+    var colorsArray: [Color]    
     
     var body: some View {
     ZStack{
-            Rectangle()
-                .fill(Color.white)
-                .frame(width: 60, height: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
             VStack
             {
                 HStack

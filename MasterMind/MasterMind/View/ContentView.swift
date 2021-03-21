@@ -13,35 +13,26 @@ struct ContentView: View {
     
     var body: some View
     {
-        
+        ZStack{
+            
             VStack
             {
                 Text("MasterMind")
                     .font(.title)
+                    .colorInvert()
                     .padding()
                 VStack
                 {
-                    
-                    
-                    ForEach(0..<10) {i in
+                    ForEach(0..<8) {i in
                         HStack
                         {
                             let rawColors = viewModel.testRow[i].toColors()
-                            let dotColor = viewModel.dotSolution.toColors()
-                            
+                            let dotColor = viewModel.dotSolution[i].toColors()       
                             
                             FourDotRow(colorsArray: dotColor)
                             RowView(test: rawColors)
-                            
                         }
-                        
-                                           
                     }
-                    
-                    
-                        
-                    
-                                        
                     HStack
                     {
                         Spacer()
@@ -68,16 +59,16 @@ struct ContentView: View {
                         }
                         Buttons(label: " ", colorBackground: dotColors.toColor(.GREEN)())
                         {
-                            self.viewModel.checkCombination()                        }
+                            self.viewModel.checkCombination()
+                        }
                         Spacer()
                     }
                 } 
-                Text("Tried 2 times")
-                    .font(.title2)
-                    .padding()
-                Spacer()
+                
+                WinView(show: self.viewModel.endGame, action: self.viewModel.playAgain)
             }
-            .background(Color.white)
+    }
+            .background(Color.black)
     }
 }
 

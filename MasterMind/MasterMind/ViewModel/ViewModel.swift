@@ -23,7 +23,8 @@ public enum dotColors: Int, CaseIterable
     case YELLOW = 3
     case ORANGE = 4
     case PURPLE = 5
-    case GREEN = 6    
+    case GREEN = 6
+    case WHITE = 7
     
     public func toColor() -> Color
     {        
@@ -42,6 +43,8 @@ public enum dotColors: Int, CaseIterable
             return .purple
         case .GREEN:
             return .green
+        case .WHITE:
+            return .white
         }
     }
     
@@ -61,8 +64,6 @@ public enum dotColors: Int, CaseIterable
 
 class MasterMindViewModel : ObservableObject
 {
-    
-    
     @Published var testRow : [[dotColors]] = [
         [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
         [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
@@ -71,14 +72,19 @@ class MasterMindViewModel : ObservableObject
         [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
         [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
         [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
+        [.EMPTY, .EMPTY, .EMPTY, .EMPTY]
+                                                     ]
+    @Published var dotSolution : [[dotColors]] = [
         [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
         [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
         [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
         [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
         [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
-                                             ]
-    @Published var dotSolution : [dotColors] = [.EMPTY, .EMPTY, .EMPTY, .EMPTY]
-    
+        [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
+        [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
+        [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
+    ]
+    @Published var endGame: Bool = false
     var rowIndex: Int = 0
     var columnIndex: Int = 0
     
@@ -105,24 +111,82 @@ class MasterMindViewModel : ObservableObject
         }
     }
     
-    public func checkCombination()
+    public func dotColorSolve(testingRow: [dotColors])-> [dotColors]
     {
-        var checkedN = [Int]()
+        var returnRow : [dotColors] = [.EMPTY, .EMPTY, .EMPTY, .EMPTY]
         
-        for (i, _) in testRow[rowIndex].enumerated() {
-            if testRow[rowIndex][i].rawValue == solveSolution[i].rawValue
+        var auxRow : [dotColors] = testingRow
+        var auxSolve : [dotColors] = solveSolution
+        
+        for (i, _) in testingRow.enumerated() {
+            if testingRow[i] == solveSolution[i]
             {
-                dotSolution[i] = .RED
-                checkedN.append(i)
+                returnRow[i] = .RED
+                auxRow[i] = .EMPTY
+                auxSolve[i] = .EMPTY
             }
         }
-        rowIndex=rowIndex+1
-        columnIndex=0
         
+        for (i, _) in testingRow.enumerated()
+        {
+            for (j, _) in testingRow.enumerated()
+            {
+                if( (auxRow[i] != .EMPTY) && (auxSolve[j] == testingRow[i]) )
+                {
+                    returnRow[i] = .WHITE
+                    auxRow[i] = .EMPTY
+                    auxSolve[j] = .EMPTY
+                }
+            }
+        }
+        return returnRow
+    }
+    
+    public func checkCombination()
+    {
+        if(columnIndex>3)
+        {
+            dotSolution[rowIndex] = dotColorSolve(testingRow: testRow[rowIndex])
+            if dotSolution[rowIndex] == [.RED, .RED, .RED, .RED]
+            {
+                endGame = true
+            }
+            rowIndex=rowIndex+1
+            columnIndex=0
+            return
+        }       
+    }
+    
+    public func playAgain()
+    {
+        solveSolution = [dotColors(rawValue:Int.random(in: (2...5)))!,                             dotColors(rawValue: Int.random(in: (2...5)))!,
+                         dotColors(rawValue: Int.random(in: (2...5)))!,
+                         dotColors(rawValue: Int.random(in: (2...5)))!]
+    
+        testRow = [
+            [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
+            [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
+            [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
+            [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
+            [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
+            [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
+            [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
+            [.EMPTY, .EMPTY, .EMPTY, .EMPTY]
+        ]
         
-        
-        
-        
+        dotSolution = [
+            [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
+            [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
+            [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
+            [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
+            [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
+            [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
+            [.EMPTY, .EMPTY, .EMPTY, .EMPTY],
+            [.EMPTY, .EMPTY, .EMPTY, .EMPTY]
+        ]
+        endGame = false
+        rowIndex = 0
+        columnIndex = 0
     }
 }
 
